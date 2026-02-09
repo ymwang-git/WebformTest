@@ -11,6 +11,9 @@ namespace WebformTest
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            string str = "";
+            str = Request.QueryString["1111"].ToString();
+            Response.Write(str);
 
         }
     }
