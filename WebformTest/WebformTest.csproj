@@ -300,6 +300,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="code\Classall.cs" />
     <Compile Include="code\Getdata.cs" />
+    <Compile Include="code\VulnerableExamples.cs" />
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
