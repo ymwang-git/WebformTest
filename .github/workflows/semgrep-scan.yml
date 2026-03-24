@@ -1,0 +1,45 @@
+name: Semgrep SAST Scan
+
+# 1. 設定觸發條件 (Triggers)
+# 當有人發起 Pull Request 到 main 分支，或直接 Push 程式碼時觸發
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+
+# 2. 定義工作任務 (Jobs)
+jobs:
+  sast-scan:
+    name: 執行本地源碼安全掃描
+    # 指定使用第一步架設的地端 Runner (標籤通常預設為 self-hosted)
+    runs-on: self-hosted 
+
+    steps:
+      # 步驟 A：拉取最新的程式碼到 Runner 伺服器上
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 步驟 B：執行 Semgrep 離線掃描
+      # 說明：
+      # --config=semgrep-rules.yml 指向您第二步放在專案內的本地規則檔
+      # --text 指定將結果輸出為易讀的純文字格式
+      # --out=semgrep-report.txt 將結果存成一個實體檔案
+      # --error 如果掃描到任何符合規則的漏洞，則強制中斷 CI 流程 (標示為 Failed)
+      - name: Run Semgrep Offline Scan
+        run: |
+          semgrep scan --config=semgrep-rules.yml \
+                       --text \
+                       --out=semgrep-report.txt \
+                       --error
+
+      # 步驟 C：保留掃描報告 (Artifacts)
+      # 說明：無論上一步有沒有報錯中斷 (if: always())，都將產生的報告檔上傳保留，
+      # 這樣開發者才能從 GitHub 介面上載下來看具體錯在哪裡。
+      - name: Upload Semgrep Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: semgrep-security-report
+          path: semgrep-report.txt
+          retention-days: 7 # 報告保留 7 天
