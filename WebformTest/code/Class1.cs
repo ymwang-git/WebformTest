@@ -8,6 +8,13 @@ namespace WebformTest.code
     public class Class1
     {
         boot sc = true;
+        string sql = "";
+        sql = "select * from test1 where 1=1"
+
+
+
+
+
 
     }
 }
