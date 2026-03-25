@@ -1,23 +1,10 @@
 name: Semgrep Cloud Integration
 
 on:
-  # 1. 保留手動觸發按鈕 (您原本能成功執行的原因)
-  workflow_dispatch: 
-
-  # 2. 當 Push 到這些分支時自動觸發 (涵蓋 main, master 與 dev)
-  push:
-    branches: 
-      - main
-      - master
-      - dev
-      - 'feature/**' # 涵蓋所有 feature/ 開頭的分支
-
-  # 3. 當發起 PR「準備合併進」這些分支時自動觸發
   pull_request:
-    branches: 
-      - main
-      - master
-      - dev
+    branches: [ "master" ]
+  push:
+    branches: [ "master" ]
 
 jobs:
   semgrep-scan:
