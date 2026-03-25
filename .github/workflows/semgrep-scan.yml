@@ -12,12 +12,22 @@ jobs:
 
     # 必須確保 Runner 伺服器上已經裝好 Python 與 pip install semgrep
     steps:
+      # 1. 取得程式碼
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 執行雲端連線版本的掃描指令
+      # 2. 準備 Python 環境 (Semgrep 需要依賴 Python 執行)
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      # 3. 安裝 Semgrep 引擎
+      - name: Install Semgrep
+        run: pip install semgrep
+
+      # 4. 執行掃描 (您原本卡住的地方)
       - name: Run Semgrep CI
         run: semgrep ci
         env:
-          # 將剛剛設定的 Secret 注入環境變數，讓 CLI 能通過身分驗證
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
