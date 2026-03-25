@@ -9,7 +9,8 @@ on:
 jobs:
   semgrep-scan:
     name: 執行 Semgrep 掃描並上傳結果
-    runs-on: self-hosted # 使用您的地端 Runner
+    runs-on: ubuntu-latest
+    #runs-on: self-hosted # 使用您的地端 Runner
 
     # 必須確保 Runner 伺服器上已經裝好 Python 與 pip install semgrep
     steps:
