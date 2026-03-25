@@ -298,6 +298,7 @@
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="code\Class1.cs" />
     <Compile Include="code\Classall.cs" />
     <Compile Include="code\Getdata.cs" />
     <Compile Include="code\SecretsAndDeps.cs" />
